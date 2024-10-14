@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nutrition Results</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <h2>Nutrition Analysis Results</h2>
+    <p>Total Carbohydrates: {{ total_carbohydrates }}</p>
+    <p>Total Proteins: {{ total_proteins }}</p>
+    <p>Total Fat: {{ total_fat }}</p>
+    <p>Total Calories: {{ total_calories }}</p>
+
+    {% if excess_carbohydrates %}
+    <p>Excess Carbohydrates: {{ excess_carbohydrates }}</p>
+    {% endif %}
+    {% if excess_proteins %}
+    <p>Excess Proteins: {{ excess_proteins }}</p>
+    {% endif %}
+    {% if excess_fats %}
+    <p>Excess Fat: {{ excess_fats }}</p>
+    {% endif %}
+    {% if excess_calories %}
+    <p>Excess Calories: {{ excess_calories }}</p>
+    {% endif %}
+
+    {% if deficient_carbohydrates %}
+    <p>Deficient Carbohydrates: {{ deficient_carbohydrates }}</p>
+    {% endif %}
+    {% if deficient_proteins %}
+    <p>Deficient Proteins: {{ deficient_proteins }}</p>
+    {% endif %}
+    {% if deficient_fats %}
+    <p>Deficient Fat: {{ deficient_fats }}</p>
+    {% endif %}
+    {% if deficient_calories %}
+    <p>Deficient Calories: {{ deficient_calories }}</p>
+    {% endif %}
+
+    <p style="white-space: pre-wrap;">Adjustments: {{ Adjustements }}</p>
+</html>
+
+    

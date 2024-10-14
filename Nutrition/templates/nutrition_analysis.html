@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nutrition Analysis</title>
+    <script src=   
+"https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">   
+    </script>   
+    
+    <script src=   
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">   
+    </script>   
+    
+    <link href=   
+"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css"
+        rel="stylesheet" type="text/css" /> 
+
+    {% load static %}
+    <link rel="stylesheet"  type="text/css" href ="{% static 'css/base.css'%}">
+</head>
+<body>
+    <h2>Enter Your Meals</h2>
+<form method="POST" id="meal-form">
+    {% csrf_token %}
+    <div class="input-container" id="inputContainer">
+      <label for="breakfast">Breakfast:</label>
+      <input type="text" id="breakfast" name="breakfast" placeholder="Enter your breakfast items" class="autocomplete-field" style="width: 300px;">
+      <input type="text" name = 'brquantity' id = 'brquantity' placeholder="Enter quantity">
+    </div>
+    <br>
+    <div class="linput-container" id="linputContainer">
+      <label for="lunch">Lunch:</label>
+      <input type="text" id="lunch" name="lunch" placeholder="Enter your lunch items" style="width: 300px;">
+      <input type="text" name="lquantity" id="lquantity" placeholder="Enter quantity">
+  </div>
+  <br>
+    <div class="dinner-Container" id="dinnerContainer">
+      <label for="dinner">Dinner:</label>
+      <input type="text" id="dinner" name="dinner" placeholder="Enter your dinner items" style="width: 300px;">
+      <input type="text" name='dquantity' id='dquantity' placeholder="Enter quantity">
+  </div>
+  <br>
+  <div class="snacks-Container" id="snacksContainer">
+      <label for="snacks">Snacks:</label>
+      <input type="text" name="snacks" id="snacks" placeholder="Enter your Snack items" style="width: 300px;">
+      <input type="text" name="squantity" id = "squantity" placeholder="Enter quantity">
+  </div>
+    <br>
+    <label for = "age">Age:</label>
+    <input type="number" name = "age" placeholder="Enter your Age">
+    <br>
+    <label for = "weigth">Weigth:</label>
+    <input type="number" name = "weigth" placeholder = "Enter your weigth">
+    <br>
+    <label for ="gender">Gender:</label>
+    <input type = "text" name = "gender" id ="gender" placeholder="Enter your gender">
+    <br>
+    <label for="activity">Activity:</label>
+    <input type="text" name="activity" id="activity" placeholder="Enter your Activity">
+    <br>
+    <button type="submit">Analyze</button>
+</form>
+
+<h2> Activity Table </h2>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+      <th style="color: darkblue;">Level</th>
+      <th style="color: darkblue;">Description</th>
+    </tr>
+    <tr>
+      <td><b>Sedentary</b></td>
+      <td>Very physically inactive, inactive in both work and leisure.</td>
+    </tr>
+    <tr>
+      <td><b>Lightly Active</b></td>
+      <td>Daily routine includes some walking, or intense exercise once or twice per week. Most students are in this category.</td>
+    </tr>
+    <tr>
+      <td><b>Moderate Activity</b></td>
+      <td>Intense exercise lasting 20–45 minutes at least three times per week, or a job with a lot of walking, or a moderate intensity job.</td>
+    </tr>
+    <tr>
+      <td><b>Very Active</b></td>
+      <td>Intense exercise lasting at least an hour per day, or a heavy physical job, such as a mail carrier or an athlete in training.</td>
+    </tr>
+    <tr>
+      <td><b>Extremely Active</b></td>
+      <td>Extremely active means an athlete on an unstoppable training schedule or a very demanding job, such as working in the armed forces or shoveling coal.</td>
+    </tr>
+  </table>
+  <script>
+    $(function() {
+        var availableTags = [
+            {% for item in item_names %}
+                "{{ item.name }}",
+            {% endfor %}
+        ];
+    
+        function extractLast(term) {
+            return term.split(',').pop().trim(); 
+        }
+    
+        function applyAutocomplete(selector) {
+            selector.autocomplete({
+                source: function (request, response) {
+                    var term = extractLast(request.term);
+                    response($.ui.autocomplete.filter(availableTags, term));
+                },
+                focus: function () {
+                    return false;
+                },
+                select: function (event, ui) {
+                    var terms = this.value.split(',');
+                    terms.pop();
+                    terms.push(ui.item.value);
+                    terms.push('');
+                    this.value = terms.join(', ');
+                    return false;
+                }
+            });
+        }
+    
+        applyAutocomplete($("#breakfast, #lunch, #dinner, #snacks"));
+        var genderTags = ["Male", "Female"];
+        $("#gender").autocomplete({source: genderTags});
+    
+        var ActivityTags = ["Sedentary", "Lightly active", "Moderate activity", "Very active", "Extremely active"];
+        $("#activity").autocomplete({source: ActivityTags});
+    });
+    </script>    
+</body>
+</html>

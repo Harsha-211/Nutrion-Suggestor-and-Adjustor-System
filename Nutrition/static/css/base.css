@@ -1,0 +1,27 @@
+body{
+    text-align: center;
+    font-family: "Arial", sans-serif;
+    background-color: blanchedalmond;
+    font-size: 25px;
+}
+form{
+    border: 3px solid #000;
+    border-radius: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+h2{
+    margin: 30px;
+    color: darkblue;
+}
+input{
+    margin-bottom: 20px;
+}
+button{
+    background-color: rgb(146, 154, 238);
+    color: black;
+    size: 5px;
+}
+th{
+    color: darkblue;
+}
